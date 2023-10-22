@@ -1,4 +1,4 @@
-# .md 2
+# Lista Duplamente Encadeada
 
 Uma lista duplamente encadeada é uma estrutura de dados em que cada nó possui referências tanto para o próximo nó quanto para o nó anterior na sequência. Isso facilita a navegação em ambas as direções e pode tornar certas operações mais eficientes.
 
