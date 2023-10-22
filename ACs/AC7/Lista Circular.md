@@ -1,4 +1,4 @@
-## **Lista Circular**
+# **Lista Circular**
 
 Uma lista circular simplesmente encadeada é uma estrutura de dados em que cada nó aponta para o próximo nó na lista, e o último nó aponta de volta para o primeiro nó, formando um círculo. Diferentemente de uma lista encadeada simples, ela não possui um fim claro, permitindo uma iteração contínua pela lista.
 
