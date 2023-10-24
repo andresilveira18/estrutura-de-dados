@@ -7,7 +7,13 @@ Uma lista circular simplesmente encadeada é uma estrutura de dados em que cada 
 Cada nó em uma lista circular simplesmente encadeada contém dois campos:
 
 1. **Dados**: O valor ou informação armazenada no nó.
-2. **Próximo**: Um ponteiro para o próximo nó na lista.
+2. **Próximo**: Um ponteiro que aponta para o próximo nó na lista.
+
+## **Estrutura da Lista**
+
+A estrutura da lista contém apenas um campo:
+
+1. **Ponteiro**: Um ponteiro do primeiro elemento da lista
 
 ## **Operações Básicas**
 
@@ -25,13 +31,12 @@ A operação de exibição percorre a lista do início ao fim, imprimindo o valo
         Se nó é NULL então
             Escrever "A lista está vazia"
             Retornar
-        Fim Se
     
         nóAtual <- nó
-        Fazer
+        Enquanto nóAtual.próximo ≠ nó
             Escrever nóAtual.dados
             nóAtual <- nóAtual.próximo
-           Enquanto nóAtual ≠ nó
+           
     
     Fim Função
     ```
@@ -85,11 +90,11 @@ A exclusão do primeiro nó em uma lista circular requer ajustes nos ponteiros p
         
         Se nó.próximo é nó então
             // A lista tem apenas um nó
-            Liberar nó
+            nó.próximo = NULL
             Retornar NULL
         Senão
             nóAtual <- nó
-            Enquanto nóAtual.próximo ≠ nó Fazer
+            Enquanto nóAtual.próximo ≠ nó:
                 nóAtual <- nóAtual.próximo
             Fim Enquanto  // No fim, o nóAtual é o último nó da lista circular (ele aponta para o nó inicial)
             
