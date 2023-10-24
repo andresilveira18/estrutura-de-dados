@@ -14,25 +14,24 @@ Cada nó em uma lista duplamente encadeada contém três campos:
 
 ### **1. Exibição dos Nós em uma Lista Duplamente Encadeada**
 
-Esta operação percorre a lista do primeiro ao último nó, imprimindo o valor armazenado em cada nó. Você pode começar do nó cabeça e seguir os ponteiros "próximo" até alcançar o final da lista (quando o ponteiro "próximo" é **`NULL`**).
+Esta operação percorre a lista do primeiro ao último nó, imprimindo o valor armazenado em cada nó. Podemos começar do nó cabeça e seguir os ponteiros "próximo" até alcançar o final da lista (quando o ponteiro "próximo" é **`NULL`**).
 
-- Defina o nó atual como a cabeça da lista.
-- Enquanto o nó atual não for **`NULL`**, faça:
-    - Imprima o valor do nó atual.
-    - Mova para o próximo nó (nó atual = nó atual.próximo).
+- Definir o nó atual como a cabeça da lista.
+- Enquanto o nó atual não for **`NULL`**, fazer:
+    - Imprimir o valor do nó atual.
+    - Mover para o próximo nó (nó atual = nó atual.próximo).
 
 ```
 Função ExibirListaDupla(nó):
     Se nó é NULL então
         Escrever "A lista está vazia"
         Retornar
-    Fim Se
 
     nóAtual <- nó
     Enquanto nóAtual ≠ NULL Fazer
         Escrever nóAtual.dados
         nóAtual <- nóAtual.próximo
-    Fim Enquanto
+
 Fim Função
 ```
 
@@ -40,27 +39,25 @@ Fim Função
 
 A operação de busca percorre a lista até encontrar um nó com o valor desejado.
 
-- Defina o nó atual como a cabeça da lista.
-- Enquanto o nó atual não for **`NULL`**, faça:
-    - Verifique se o nó atual tem o valor desejado.
+- Definir o nó atual como a cabeça da lista.
+- Enquanto o nó atual não for **`NULL`**, fazer:
+    - Verificar se o nó atual tem o valor desejado.
         - Se tiver, retorne o nó atual.
-    - Mova para o próximo nó.
-- Se o final da lista for alcançado sem encontrar o valor, retorne **`NULL`** ou uma indicação de que o valor não foi encontrado.
+    - Mover para o próximo nó.
+- Se o final da lista for alcançado sem encontrar o valor, retornar **`NULL`** ou uma indicação de que o valor não foi encontrado.
 
 ```
 Função BuscarNó(nó, valor):
     Se nó é NULL então
         Escrever "A lista está vazia"
         Retornar NULL
-    Fim Se
 
     nóAtual <- nó
     Enquanto nóAtual ≠ NULL Fazer
         Se nóAtual.dados = valor então
             Retornar nóAtual
-        Fim Se
+
         nóAtual <- nóAtual.próximo
-    Fim Enquanto
 
     Escrever "Valor não encontrado"
     Retornar NULL
@@ -69,61 +66,73 @@ Fim Função
 
 ### **3. Inserção de um Nó**
 
-A inserção pode ocorrer em várias posições: no início, no meio ou no fim da lista. Aqui, vou descrever a inserção no início da lista.
+A inserção pode ocorrer em várias posições: no início, no meio ou no fim da lista.
 
-- Crie um novo nó.
-- Faça o "próximo" do novo nó apontar para a cabeça atual da lista.
-- Faça o "anterior" da cabeça atual da lista apontar para o novo nó.
-- Atualize a cabeça da lista para ser o novo nó.
-
-```
-Função InserirNó(nó, valor):
-    novoNó <- criar novo Nó
-    novoNó.dados <- valor
-    novoNó.próximo <- nó
-    novoNó.anterior <- NULL
+    ```
+    Função InserirNóOrdenado(cabeça, valor):
+        novoNó <- criar novo Nó
+        novoNó.dados <- valor
     
-    Se nó ≠ NULL então
-        nó.anterior <- novoNó
-    Fim Se
-
-    Retornar novoNó
-Fim Função
-```
+        Se cabeça = NULL então
+            //  A lista está vazia, o novo nó se torna a cabeça.
+            cabeça <- novoNó
+            Retornar
+    
+        Se valor < cabeça.dados então
+            //  O novo nó deve ser inserido antes da cabeça atual.
+            novoNó.próximo <- cabeça
+            cabeça.anterior <- novoNó
+            cabeça <- novoNó
+    
+        Senão
+            //  Percorra a lista para encontrar o local adequado para a inserção.
+            nó_atual <- cabeça
+            Enquanto nó_atual.próximo ≠ NULL e valor > nó_atual.dados
+                nó_atual <- nó_atual.próximo
+            
+            Se valor > nó_atual.dados então
+                // Inserir no final da lista.
+                nó_atual.próximo <- novoNó
+                novoNó.anterior <- nó_atual
+    
+            Senão
+                // Inserir no meio da lista.
+                novoNó.próximo <- nó_atual
+                novoNó.anterior <- nó_atual.anterior
+                nó_atual.anterior.próximo <- novoNó
+                nó_atual.anterior <- novoNó
+    
+        Retornar
+    Fim Função
+    ```
 
 ### **4. Remoção de um Nó**
 
 A remoção de um nó requer ajustes nos ponteiros para remover o nó da lista.
 
-- Localize o nó a ser removido.
+- Localizar o nó a ser removido.
 - Se o nó a ser removido é a cabeça da lista:
-    - Atualize a cabeça para ser o próximo nó.
-    - Faça o "anterior" da nova cabeça (se não for **`NULL`**) apontar para **`NULL`**.
+    - Atualizar a cabeça para ser o próximo nó.
+    - Fazer o "anterior" da nova cabeça (se não for **`NULL`**) apontar para **`NULL`**.
 - Se o nó a ser removido não é a cabeça:
-    - Faça o "próximo" do nó anterior apontar para o próximo do nó a ser removido.
-    - Se o próximo do nó a ser removido não for **`NULL`**, faça o "anterior" dele apontar para o nó anterior do nó a ser removido.
-- Libere a memória do nó a ser removido.
+    - Fazer o "próximo" do nó anterior apontar para o próximo do nó a ser removido.
+    - Se o próximo do nó a ser removido não for **`NULL`**, fazer o "anterior" dele apontar para o nó anterior do nó a ser removido.
 
 ```
 Função RemoverNó(cabeça, nóARemover):
     Se cabeça = NULL OU nóARemover = NULL então
         Escrever "Operação inválida"
         Retornar cabeça
-    Fim Se
 
     Se cabeça = nóARemover então
         cabeça <- nóARemover.próximo
-    Fim Se
 
     Se nóARemover.próximo ≠ NULL então
         nóARemover.próximo.anterior <- nóARemover.anterior
-    Fim Se
 
     Se nóARemover.anterior ≠ NULL então
         nóARemover.anterior.próximo <- nóARemover.próximo
-    Fim Se
 
-    Liberar nóARemover
     Retornar cabeça
 Fim Função
 ```
